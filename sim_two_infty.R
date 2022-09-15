@@ -29,17 +29,17 @@ r <- 3
 
 #C <- array( ,dim=rep(r,3))
 #C <- as.tensor(C)
-svd(k_unfold(C,1)@data )$d
-ps <- seq(100,200,50)#,50)#500,50)
-ntrials <- 3
-sigmas <- seq(1,50,10)#100,10)
+#svd(k_unfold(C,1)@data )$d
+ps <- seq(100,500,50)#,50)#500,50)
+ntrials <- 10
+sigmas <- seq(1,100,5)#100,10)
 
 
-finalres_uniform <- foreach(p = ps) %do% {
+finalres_uniform <- foreach(p = ps) %dopar% {
   print(paste0("p=",p))
-  toreturn2 <-  foreach(n = c(1:ntrials),.combine=cbind) %do% {
+  toreturn2 <-  foreach(n = c(1:ntrials),.combine=cbind) %dopar% {
     print(paste0("n=",n))
-    toreturn <- foreach(j = c(1:length(sigmas)),.combine=rbind) %do% {
+    toreturn <- foreach(j = c(1:length(sigmas)),.combine=rbind) %dopar% {
       #print(j)
       return(runonesim(p,r,C,sigmamax = sigmas[j]))
      }
@@ -56,11 +56,11 @@ finalres_uniform <- foreach(p = ps) %do% {
 save(finalres_uniform,file = "sim1_9-15.Rdata")
 print("first sim done!")
 
-finalres_het1 <- foreach(p = ps) %do% {
+finalres_het1 <- foreach(p = ps) %dopar% {
   print(paste0("p=",p))
-  toreturn2 <-  foreach(n = c(1:ntrials),.combine=cbind) %do% {
+  toreturn2 <-  foreach(n = c(1:ntrials),.combine=cbind) %dopar% {
     print(paste0("n=",n))
-    toreturn <- foreach(j = c(1:length(sigmas)),.combine=rbind) %do% {
+    toreturn <- foreach(j = c(1:length(sigmas)),.combine=rbind) %dopar% {
       #print(j)
       return(runonesim(p,r,C,sigmamax = sigmas[j],het_amt = .75))
     }
@@ -72,11 +72,11 @@ finalres_het1 <- foreach(p = ps) %do% {
 save(finalres_het1,file = "sim2_9-15.Rdata")
 print("second sim done!")
 
-finalres_het2 <- foreach(p = ps) %do% {
+finalres_het2 <- foreach(p = ps) %dopar% {
   print(paste0("p=",p))
-  toreturn2 <-  foreach(n = c(1:ntrials),.combine=cbind) %do% {
+  toreturn2 <-  foreach(n = c(1:ntrials),.combine=cbind) %dopar% {
     print(paste0("n=",n))
-    toreturn <- foreach(j = c(1:length(sigmas)),.combine=rbind) %do% {
+    toreturn <- foreach(j = c(1:length(sigmas)),.combine=rbind) %dopar% {
       #print(j)
       return(runonesim(p,r,C,sigmamax = sigmas[j],het_amt = .5))
     }
@@ -88,11 +88,11 @@ finalres_het2 <- foreach(p = ps) %do% {
 save(finalres_het2,file = "sim3_9-15.Rdata")
 print("third sim done!")
 
-finalres_het3 <- foreach(p = ps) %do% {
+finalres_het3 <- foreach(p = ps) %dopar% {
   print(paste0("p=",p))
-  toreturn2 <-  foreach(n = c(1:ntrials),.combine=cbind) %do% {
+  toreturn2 <-  foreach(n = c(1:ntrials),.combine=cbind) %dopar% {
     print(paste0("n=",n))
-    toreturn <- foreach(j = c(1:length(sigmas)),.combine=rbind) %do% {
+    toreturn <- foreach(j = c(1:length(sigmas)),.combine=rbind) %dopar% {
       #print(j)
       return(runonesim(p,r,C,sigmamax = sigmas[j],het_amt = .25))
     }
