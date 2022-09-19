@@ -7,7 +7,7 @@ registerDoParallel(cl,numcores)
 
 print("got here!")
 rs <- rep(3,3)
-set.seed(9152022)
+set.seed(9192022)
 C <- array(rnorm(prod(rs)), dim=rs) # Core tensor
 C <- as.tensor(C)
 # adjust minimal separation.
@@ -53,7 +53,7 @@ finalres_uniform <- foreach(p = ps) %dopar% {
 #rowMeans(finalres[[3]])/sigmas
 
 
-save(finalres_uniform,file = "sim1_9-15.Rdata")
+save(finalres_uniform,file = "sim1_9-19.Rdata")
 print("first sim done!")
 
 finalres_het1 <- foreach(p = ps) %dopar% {
@@ -69,7 +69,7 @@ finalres_het1 <- foreach(p = ps) %dopar% {
   return(toreturn2)
 }
 
-save(finalres_het1,file = "sim2_9-15.Rdata")
+save(finalres_het1,file = "sim2_9-19.Rdata")
 print("second sim done!")
 
 finalres_het2 <- foreach(p = ps) %dopar% {
@@ -85,7 +85,7 @@ finalres_het2 <- foreach(p = ps) %dopar% {
   return(toreturn2)
 }
 
-save(finalres_het2,file = "sim3_9-15.Rdata")
+save(finalres_het2,file = "sim3_9-19.Rdata")
 print("third sim done!")
 
 finalres_het3 <- foreach(p = ps) %dopar% {
@@ -101,5 +101,5 @@ finalres_het3 <- foreach(p = ps) %dopar% {
   return(toreturn2)
 }
 
-save(finalres_het2,file = "sim4_9-15.Rdata")
+save(finalres_het3,file = "sim4_9-19.Rdata")
 print("finished!")
